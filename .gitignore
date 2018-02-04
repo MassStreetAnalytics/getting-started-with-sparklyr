@@ -34,3 +34,8 @@ vignettes/*.pdf
 
 #Ignore entire metastore_db directory
 metastore_db
+
+#Ignore various application files
+*.log
+*.ini
+*.bak
