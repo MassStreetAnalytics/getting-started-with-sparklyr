@@ -39,3 +39,5 @@ metastore_db
 *.log
 *.ini
 *.bak
+*.csv
+logs

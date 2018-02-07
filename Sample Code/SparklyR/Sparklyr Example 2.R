@@ -1,11 +1,29 @@
+#This is the source code from
 #http://spark.rstudio.com/
 
 library(sparklyr)
+library(tidyverse)
+
 sc <- spark_connect(master = "local")
 
-install.packages(c("nycflights13", "Lahman"))
+flights_tbl = spark_read_csv(
+  sc, 
+  path = file.path("../../Data","flights.csv",fsep = .Platform$file.sep), 
+  col_names = TRUE, 
+  name = "flights", 
+  overwrite = TRUE
+)
 
-library(dplyr)
+
+flights_tbl = spark_read_csv(
+  sc, 
+  path = file.path("../../Data","batting.csv",fsep = .Platform$file.sep), 
+  col_names = TRUE, 
+  name = "batting", 
+  overwrite = TRUE
+)
+
+
 iris_tbl <- copy_to(sc, iris)
 flights_tbl <- copy_to(sc, nycflights13::flights, "flights")
 batting_tbl <- copy_to(sc, Lahman::Batting, "batting")
