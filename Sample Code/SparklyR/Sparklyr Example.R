@@ -39,7 +39,7 @@ tbl_import_iris = spark_read_csv(
 #Register the training set
 #Create an R reference object for the training set
 #sdf_partition is not actually a partition
-partition_iris <- sdf_partition(tbl_import_iris, training=0.5, testing=0.5) 
+partition_iris <- sdf_partition(tbl_import_iris, training=0.5, testing=0.5, seed = 1000) 
 
 #this is all done with SparkSQL so you have to give things a table name
 sdf_register(partition_iris, c("spark_iris_training", "spark_iris_test")) 
