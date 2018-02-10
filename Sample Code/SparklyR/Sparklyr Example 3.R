@@ -27,4 +27,8 @@ tbl_import_iris = spark_read_csv(
 )
 
 
-iris_preview <- dbGetQuery(sc, "SELECT * FROM import_iris WHERE Species = 'versicolor'")
+iris_preview = dbGetQuery(sc, "SELECT * FROM import_iris WHERE Species = 'versicolor'")
+
+#Clean Up
+spark_disconnect(sc)
+rm(list=ls())

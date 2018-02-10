@@ -1,5 +1,4 @@
-#This is the source code from
-#http://spark.rstudio.com/
+#Using dplyr functionality
 
 library(sparklyr)
 library(tidyverse)
@@ -18,7 +17,7 @@ flights_tbl = spark_read_csv(
 # filter by departure delay and print the first few records
 flights_tbl %>% filter(dep_delay == 2)
 
-delay <- flights_tbl %>% 
+delay = flights_tbl %>% 
   group_by(tailnum) %>%
   summarise(count = n(), dist = mean(distance), delay = mean(arr_delay)) %>%
   filter(count > 20, dist < 2000, !is.na(delay)) %>%
@@ -30,7 +29,9 @@ ggplot(delay, aes(dist, delay)) +
   geom_smooth() +
   scale_size_area(max_size = 2)
 
-
+#Clean Up
+spark_disconnect(sc)
+rm(list=ls())
 
 
 

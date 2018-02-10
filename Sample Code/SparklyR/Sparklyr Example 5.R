@@ -1,3 +1,4 @@
+#Not today
 
 spark_apply(iris_tbl, function(data) {
   data[1:4] + rgamma(1,2)
