@@ -62,11 +62,12 @@ test_iris = tbl(sc, "spark_iris_test")
 #Pull results from Spark back into R.
 pred_iris = sdf_predict(model_iris, test_iris) %>% collect
 
+R.Version()
 
 ### Visualize the Model Prediction
 
-
-pred_iris %>% inner_join(data.frame(prediction=0:2, lab=model_iris$model.parameters$labels)) %>% ggplot(aes(PetalLength, PetalWidth, col=lab)) + geom_point()
+#Works in Sparklyr .7
+pred_iris %>% inner_join(data.frame(prediction=0:2, lab=model_iris$.index_labels)) %>% ggplot(aes(PetalLength, PetalWidth, col=lab)) + geom_point()
 
 #Clean Up
 spark_disconnect(sc)

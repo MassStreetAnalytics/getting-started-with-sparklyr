@@ -41,3 +41,4 @@ metastore_db
 *.bak
 *.csv
 logs
+*~*
