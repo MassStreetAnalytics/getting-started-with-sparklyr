@@ -36,6 +36,7 @@ tbl_import_iris = spark_read_csv(
   overwrite = TRUE
 )
 
+
 #Split the iris data into test/train sets
 #Register the training set
 #Create an R reference object for the training set
@@ -55,6 +56,8 @@ tidy_iris = tbl(sc, "spark_iris_training") %>% select(Species, PetalLength, Peta
 
 model_iris = tidy_iris %>% ml_decision_tree(response="Species", features=c("PetalLength", "PetalWidth"))
 
+model_iris = tidy_iris %>% ml_decision_tree(Species ~ PetalLength + PetalWidth)
+
 
 ### create a referece to the test data
 test_iris = tbl(sc, "spark_iris_test")
@@ -62,12 +65,11 @@ test_iris = tbl(sc, "spark_iris_test")
 #Pull results from Spark back into R.
 pred_iris = sdf_predict(model_iris, test_iris) %>% collect
 
-R.Version()
 
 ### Visualize the Model Prediction
 
-#Works in Sparklyr .7
-pred_iris %>% inner_join(data.frame(prediction=0:2, lab=model_iris$.index_labels)) %>% ggplot(aes(PetalLength, PetalWidth, col=lab)) + geom_point()
+
+pred_iris %>% inner_join(data.frame(prediction=0:2, lab=model_iris$model.parameters$labels)) %>% ggplot(aes(PetalLength, PetalWidth, col=lab)) + geom_point()
 
 #Clean Up
 spark_disconnect(sc)
