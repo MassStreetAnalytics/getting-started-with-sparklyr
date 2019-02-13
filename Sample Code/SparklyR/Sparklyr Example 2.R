@@ -34,5 +34,14 @@ spark_disconnect(sc)
 rm(list=ls())
 
 
+?ml_decision_tree
 
+library(nycflights13)
+?nycflights13
 
+install.packages("nycflights13")
+library(nycflights13)
+?nycflights13::flights
+
+dim(flights)
+R.version
